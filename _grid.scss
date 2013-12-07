@@ -1,0 +1,256 @@
+$totalColumns: 12;
+$gutterWidth: 20;
+$columnWidth: 60;
+
+$maxWidth: ( ($totalColumns * $columnWidth) + ( ($totalColumns) * $gutterWidth) );
+
+$columnWidthPercent: (100% / $totalColumns) * ( $columnWidth / ($columnWidth + $gutterWidth) );
+$gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
+
+* { 
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    // *behavior: url("boxsizing.htc");
+}
+.container {
+  max-width: $maxWidth + px;
+  margin: 0 auto;
+  padding: 0 ($gutterWidthPercent / 2);
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box; 
+  // ^ this allows padding to be added and percentages to be calulated correctly
+}
+.container.fixedWidth { width: $maxWidth + px; }
+
+.column, .columns {
+  float: left;
+  *display: inline;
+  margin: 0 ($gutterWidthPercent / 2);
+}
+.column.first, .columns.first { margin-left: 0 !important; }
+.column.last, .columns.last { margin-right: 0 !important; }
+
+/* Micro Clearfix on Row */
+.row:before,
+.row:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.row:after { clear: both; }
+.row { *zoom: 1; }
+.row { margin-bottom: $gutterWidth + px; }
+
+@function gridUnitWidthPercent($columns) {
+  @return ($columns * $columnWidthPercent) + (($columns - 1) * $gutterWidthPercent);
+}
+
+.one.column             { width: gridUnitWidthPercent(1);  }
+.two.columns            { width: gridUnitWidthPercent(2);  }
+.three.columns          { width: gridUnitWidthPercent(3);  }
+.four.columns           { width: gridUnitWidthPercent(4);  }
+.five.columns           { width: gridUnitWidthPercent(5);  }
+.six.columns            { width: gridUnitWidthPercent(6);  }
+.seven.columns          { width: gridUnitWidthPercent(7);  }
+.eight.columns          { width: gridUnitWidthPercent(8);  }
+.nine.columns           { width: gridUnitWidthPercent(9);  }
+.ten.columns            { width: gridUnitWidthPercent(10); }
+.eleven.columns         { width: gridUnitWidthPercent(11); }
+.twelve.columns         { width: gridUnitWidthPercent(12); }
+
+.quarter.column         { width: gridUnitWidthPercent(3); }
+.third.column           { width: gridUnitWidthPercent(4); }
+.half.column            { width: gridUnitWidthPercent(6); }
+.two-thirds.column      { width: gridUnitWidthPercent(8); }
+.three-quarters.column  { width: gridUnitWidthPercent(9); }
+
+.centeredColumn         { float: none; margin: 0 auto; text-align: center; }
+
+
+/*------------------------------
+  Offsets
+------------------------------*/
+
+.offset-by-one    { margin-left: gridUnitWidthPercent(1)  + ($gutterWidthPercent); }
+.offset-by-two    { margin-left: gridUnitWidthPercent(2)  + ($gutterWidthPercent); }
+.offset-by-three  { margin-left: gridUnitWidthPercent(3)  + ($gutterWidthPercent); }
+.offset-by-four   { margin-left: gridUnitWidthPercent(4)  + ($gutterWidthPercent); }
+.offset-by-five   { margin-left: gridUnitWidthPercent(5)  + ($gutterWidthPercent); }
+.offset-by-six    { margin-left: gridUnitWidthPercent(6)  + ($gutterWidthPercent); }
+.offset-by-seven  { margin-left: gridUnitWidthPercent(7)  + ($gutterWidthPercent); }
+.offset-by-eight  { margin-left: gridUnitWidthPercent(8)  + ($gutterWidthPercent); }
+.offset-by-nine   { margin-left: gridUnitWidthPercent(9)  + ($gutterWidthPercent); }
+.offset-by-ten    { margin-left: gridUnitWidthPercent(10) + ($gutterWidthPercent); }
+.offset-by-eleven { margin-left: gridUnitWidthPercent(11) + ($gutterWidthPercent); }
+
+/*------------------------------
+  Nested Columns
+------------------------------*/
+
+@function nestedMultiplier($columns) {
+  @return $maxWidth / ( ($columns * $columnWidth) + ( ($columns - 1) * $gutterWidth ) );
+}
+.two.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(2);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(2);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(2); }
+}
+.three.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(3);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(3);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(3); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(3); }
+}
+.four.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(4);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(4);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(4); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(4); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(4); }
+}
+.five.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(5);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(5);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(5); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(5); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(5); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(5); }
+}
+.six.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(6);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(6);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(6); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(6); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(6); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(6); }
+  .five.columns   { width: gridUnitWidthPercent(5) * nestedMultiplier(6); }
+}
+.seven.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(7);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(7);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(7); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(7); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(7); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(7); }
+  .five.columns   { width: gridUnitWidthPercent(5) * nestedMultiplier(7); }
+  .six.columns    { width: gridUnitWidthPercent(6) * nestedMultiplier(7); }
+}
+.eight.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(8);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(8);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(8); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(8); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(8); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(8); }
+  .five.columns   { width: gridUnitWidthPercent(5) * nestedMultiplier(8); }
+  .six.columns    { width: gridUnitWidthPercent(6) * nestedMultiplier(8); }
+  .seven.columns  { width: gridUnitWidthPercent(7) * nestedMultiplier(8); }
+}
+.nine.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(9);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(9);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(9); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(9); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(9); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(9); }
+  .five.columns   { width: gridUnitWidthPercent(5) * nestedMultiplier(9); }
+  .six.columns    { width: gridUnitWidthPercent(6) * nestedMultiplier(9); }
+  .seven.columns  { width: gridUnitWidthPercent(7) * nestedMultiplier(9); }
+  .eight.columns  { width: gridUnitWidthPercent(8) * nestedMultiplier(8); }
+}
+.ten.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(10);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(10);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1) * nestedMultiplier(10); }
+  .two.columns    { width: gridUnitWidthPercent(2) * nestedMultiplier(10); }
+  .three.columns  { width: gridUnitWidthPercent(3) * nestedMultiplier(10); }
+  .four.columns   { width: gridUnitWidthPercent(4) * nestedMultiplier(10); }
+  .five.columns   { width: gridUnitWidthPercent(5) * nestedMultiplier(10); }
+  .six.columns    { width: gridUnitWidthPercent(6) * nestedMultiplier(10); }
+  .seven.columns  { width: gridUnitWidthPercent(7) * nestedMultiplier(10); }
+  .eight.columns  { width: gridUnitWidthPercent(8) * nestedMultiplier(10); }
+  .nine.columns   { width: gridUnitWidthPercent(9) * nestedMultiplier(10); }
+}
+.eleven.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(11);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(11);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1)  * nestedMultiplier(11); }
+  .two.columns    { width: gridUnitWidthPercent(2)  * nestedMultiplier(11); }
+  .three.columns  { width: gridUnitWidthPercent(3)  * nestedMultiplier(11); }
+  .four.columns   { width: gridUnitWidthPercent(4)  * nestedMultiplier(11); }
+  .five.columns   { width: gridUnitWidthPercent(5)  * nestedMultiplier(11); }
+  .six.columns    { width: gridUnitWidthPercent(6)  * nestedMultiplier(11); }
+  .seven.columns  { width: gridUnitWidthPercent(7)  * nestedMultiplier(11); }
+  .eight.columns  { width: gridUnitWidthPercent(8)  * nestedMultiplier(11); }
+  .nine.columns   { width: gridUnitWidthPercent(9)  * nestedMultiplier(11); }
+  .ten.columns    { width: gridUnitWidthPercent(10) * nestedMultiplier(11); }
+}
+.twelve.columns {
+  .column, .columns { 
+    margin-left:  ($gutterWidthPercent / 2) * nestedMultiplier(12);
+    margin-right: ($gutterWidthPercent / 2) * nestedMultiplier(12);
+  }
+  .one.columns    { width: gridUnitWidthPercent(1)  * nestedMultiplier(12); }
+  .two.columns    { width: gridUnitWidthPercent(2)  * nestedMultiplier(12); }
+  .three.columns  { width: gridUnitWidthPercent(3)  * nestedMultiplier(12); }
+  .four.columns   { width: gridUnitWidthPercent(4)  * nestedMultiplier(12); }
+  .five.columns   { width: gridUnitWidthPercent(5)  * nestedMultiplier(12); }
+  .six.columns    { width: gridUnitWidthPercent(6)  * nestedMultiplier(12); }
+  .seven.columns  { width: gridUnitWidthPercent(7)  * nestedMultiplier(12); }
+  .eight.columns  { width: gridUnitWidthPercent(8)  * nestedMultiplier(12); }
+  .nine.columns   { width: gridUnitWidthPercent(9)  * nestedMultiplier(12); }
+  .ten.columns    { width: gridUnitWidthPercent(10) * nestedMultiplier(12); }
+  .eleven.columns { width: gridUnitWidthPercent(11) * nestedMultiplier(12); }
+}
+
+/*------------------------------
+  Responsive Grid
+------------------------------*/
+
+@media only screen and (max-width: 768px) {
+
+.container { max-width: 520px; }
+
+  .column, .columns, .columns .columns, .columns .column { 
+    float: none;
+    display: block;
+    width: auto !important;
+    margin: 0 10px !important;
+  }
+
+  .offset-by-one,
+  .offset-by-two, 
+  .offset-by-three,
+  .offset-by-four,
+  .offset-by-five, 
+  .offset-by-six,
+  .offset-by-seven,
+  .offset-by-eight,
+  .offset-by-nine,
+  .offset-by-ten,
+  .offset-by-eleven {
+    margin-left: 10px;
+  }
+
+}
