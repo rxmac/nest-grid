@@ -1,5 +1,5 @@
 $totalColumns: 12;
-$gutterWidth: 20;
+$gutterWidth: 30;
 $columnWidth: 60;
 
 $maxWidth: ( ($totalColumns * $columnWidth) + ( ($totalColumns) * $gutterWidth) );
@@ -8,18 +8,17 @@ $columnWidthPercent: (100% / $totalColumns) * ( $columnWidth / ($columnWidth + $
 $gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
 
 * { 
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    // *behavior: url("boxsizing.htc");
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .container {
   max-width: $maxWidth + px;
   margin: 0 auto;
-  padding: 0 ($gutterWidthPercent / 2);
+  padding: 0 ($gutterWidth/2)+px;
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
-          box-sizing: content-box; 
+          box-sizing: content-box;
   // ^ this allows padding to be added and percentages to be calulated correctly
 }
 .container.fixedWidth { width: $maxWidth + px; }
@@ -32,14 +31,19 @@ $gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
 .column.first, .columns.first { margin-left: 0 !important; }
 .column.last, .columns.last { margin-right: 0 !important; }
 
-/* Micro Clearfix on Row */
+/* Micro Clearfix on Row & Container */
 .row:before,
-.row:after {
+.row:after,
+.container:before,
+.container:after {
     content: " "; /* 1 */
     display: table; /* 2 */
 }
-.row:after { clear: both; }
-.row { *zoom: 1; }
+.row:after,
+.container:after { clear: both; }
+.row, 
+.container { *zoom: 1; }
+
 .row { margin-bottom: $gutterWidth + px; }
 
 @function gridUnitWidthPercent($columns) {
@@ -59,30 +63,22 @@ $gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
 .eleven.columns         { width: gridUnitWidthPercent(11); }
 .twelve.columns         { width: gridUnitWidthPercent(12); }
 
-.quarter.column         { width: gridUnitWidthPercent(3); }
-.third.column           { width: gridUnitWidthPercent(4); }
-.half.column            { width: gridUnitWidthPercent(6); }
-.two-thirds.column      { width: gridUnitWidthPercent(8); }
-.three-quarters.column  { width: gridUnitWidthPercent(9); }
-
-.centeredColumn         { float: none; margin: 0 auto; text-align: center; }
-
 
 /*------------------------------
   Offsets
 ------------------------------*/
 
-.offset-by-one    { margin-left: gridUnitWidthPercent(1)  + ($gutterWidthPercent); }
-.offset-by-two    { margin-left: gridUnitWidthPercent(2)  + ($gutterWidthPercent); }
-.offset-by-three  { margin-left: gridUnitWidthPercent(3)  + ($gutterWidthPercent); }
-.offset-by-four   { margin-left: gridUnitWidthPercent(4)  + ($gutterWidthPercent); }
-.offset-by-five   { margin-left: gridUnitWidthPercent(5)  + ($gutterWidthPercent); }
-.offset-by-six    { margin-left: gridUnitWidthPercent(6)  + ($gutterWidthPercent); }
-.offset-by-seven  { margin-left: gridUnitWidthPercent(7)  + ($gutterWidthPercent); }
-.offset-by-eight  { margin-left: gridUnitWidthPercent(8)  + ($gutterWidthPercent); }
-.offset-by-nine   { margin-left: gridUnitWidthPercent(9)  + ($gutterWidthPercent); }
-.offset-by-ten    { margin-left: gridUnitWidthPercent(10) + ($gutterWidthPercent); }
-.offset-by-eleven { margin-left: gridUnitWidthPercent(11) + ($gutterWidthPercent); }
+.offset-by-one    { margin-left: gridUnitWidthPercent(1)  + ($gutterWidthPercent*1.5); }
+.offset-by-two    { margin-left: gridUnitWidthPercent(2)  + ($gutterWidthPercent*1.5); }
+.offset-by-three  { margin-left: gridUnitWidthPercent(3)  + ($gutterWidthPercent*1.5); }
+.offset-by-four   { margin-left: gridUnitWidthPercent(4)  + ($gutterWidthPercent*1.5); }
+.offset-by-five   { margin-left: gridUnitWidthPercent(5)  + ($gutterWidthPercent*1.5); }
+.offset-by-six    { margin-left: gridUnitWidthPercent(6)  + ($gutterWidthPercent*1.5); }
+.offset-by-seven  { margin-left: gridUnitWidthPercent(7)  + ($gutterWidthPercent*1.5); }
+.offset-by-eight  { margin-left: gridUnitWidthPercent(8)  + ($gutterWidthPercent*1.5); }
+.offset-by-nine   { margin-left: gridUnitWidthPercent(9)  + ($gutterWidthPercent*1.5); }
+.offset-by-ten    { margin-left: gridUnitWidthPercent(10) + ($gutterWidthPercent*1.5); }
+.offset-by-eleven { margin-left: gridUnitWidthPercent(11) + ($gutterWidthPercent*1.5); }
 
 /*------------------------------
   Nested Columns
@@ -228,9 +224,9 @@ $gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
   Responsive Grid
 ------------------------------*/
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 750px) {
 
-.container { max-width: 520px; }
+.container { max-width: 390px; }
 
   .column, .columns, .columns .columns, .columns .column { 
     float: none;
@@ -253,4 +249,52 @@ $gutterWidthPercent: (100% / $maxWidth ) * $gutterWidth;
     margin-left: 10px;
   }
 
+  .one-mobile.column,
+  .two-mobile.columns,
+  .three-mobile.columns,
+  .four-mobile.columns,
+  .five-mobile.columns,
+  .six-mobile.columns,
+  .seven-mobile.columns,
+  .eight-mobile.columns,
+  .nine-mobile.columns,
+  .ten-mobile.columns, 
+  .eleven-mobile.columns,
+  .twelve-mobile.columns { 
+    float: left;
+    *display: inline;
+    margin: 0 ($gutterWidthPercent / 2) !important;
+  }
+
+  .one-mobile.column         { width: gridUnitWidthPercent(1)  !important; }
+  .two-mobile.columns        { width: gridUnitWidthPercent(2)  !important; }
+  .three-mobile.columns      { width: gridUnitWidthPercent(3)  !important; }
+  .four-mobile.columns       { width: gridUnitWidthPercent(4)  !important; }
+  .five-mobile.columns       { width: gridUnitWidthPercent(5)  !important; }
+  .six-mobile.columns        { width: gridUnitWidthPercent(6)  !important; }
+  .seven-mobile.columns      { width: gridUnitWidthPercent(7)  !important; }
+  .eight-mobile.columns      { width: gridUnitWidthPercent(8)  !important; }
+  .nine-mobile.columns       { width: gridUnitWidthPercent(9)  !important; }
+  .ten-mobile.columns        { width: gridUnitWidthPercent(10) !important; }
+  .eleven-mobile.columns     { width: gridUnitWidthPercent(11) !important; }
+  .twelve-mobile.columns     { width: gridUnitWidthPercent(12) !important; }
+
+}
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: $maxWidth + ($gutterWidth*2) + px ) { @content ; }
+  }
+  @else if $point == laptop {
+    @media (max-width: $maxWidth + ($gutterWidth*2) + px ) { @content ; }
+  }
+  @else if $point == tablet {
+    @media (max-width: 960px)  { @content ; }
+  }
+  @else if $point == mobile {
+    @media (max-width: 768px)  { @content ; }
+  }
+  @else {
+    @media (max-width: $point) { @content ; }
+  }
 }
